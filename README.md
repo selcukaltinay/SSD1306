@@ -43,7 +43,26 @@
     SSD1306_DrawBitmap(0, 0, selcuk,128, 64, 1); // this function draws my photo
     SSD1306_UpdateScreen();
     ```
+6.  [Implementing custom printf function.]{.underline}
+``` c
+void vprint(const char *fmt, va_list argp)
+{
+    char string[200];
+    if(0 < vsprintf(string,fmt,argp)) // build string
+    {
+        SSD1306_Write(0, 17, (char*)string);
+    }
 
+}
+
+void my_printf(const char *fmt, ...) // custom printf() function
+{
+    va_list argp;
+    va_start(argp, fmt);
+    vprint(fmt, argp);
+    va_end(argp);
+}
+```
     [***References***]{.underline}
 
 > 1.  S. Systech, "SOLOMON SYSTECH SEMICONDUCTOR TECHNICAL DATA SSD1306 128 x 64 Dot Matrix OLED/PLED Segment/Common Driver with Controller," 2008, Accessed: May 01, 2022. [Online]. Available: <http://www.solomon-systech.com.>
